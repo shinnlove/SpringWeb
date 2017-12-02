@@ -20,7 +20,7 @@ const tools = {
       if (devUrl) {
         return 'mock/springweb/' + devUrl;
       } else {
-        return 'mock/springweb/' + url
+        return url
       }
     } else {
       return url

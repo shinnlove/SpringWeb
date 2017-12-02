@@ -46,7 +46,7 @@ let MyPage = React.createClass({
         };
         console.log(query);
 
-        let url = "http://localhost:8080/MySpring/planList.json",
+        let url = "crawler/webData.json",
             opts = {
                 loadingMsg: "查询预案数据中...",
                 noMsg: true, // 不要成功或错误的解析信息
@@ -75,7 +75,7 @@ let MyPage = React.createClass({
                     message.error("预案数据查询失败。");
                 }
             }; // 请求选项
-        tools.ajax2(url, params, opts);
+        tools.ajax(url, params, opts);
     },
 
     editPlanNode: function (record) {
