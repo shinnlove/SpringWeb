@@ -1,0 +1,76 @@
+{
+  "result": {
+    "id": 2,
+    "gmtModified": "Thu Mar 30 13:46:57 CST 2017",
+    "author": "50157",
+    "completeness": "0%",
+    "gmtCreate": "Thu Mar 30 13:46:57 CST 2017",
+    "status": "Y",
+    "warnings":[{
+      "id": 1,
+      "warningSourceType": "alert_rule",
+      "waringId": 1000,
+      "warningDesc": "报警11",
+      "planId": 2,
+      "gmtCreate": "Mon Sep 21 20:17:46 CST 2015"
+    },{
+      "id": 2,
+      "warningSourceType": "alert_rule",
+      "waringId": 1001,
+      "warningDesc": "报警22",
+      "planId": 2,
+      "gmtCreate": "Mon Sep 21 20:17:46 CST 2015"
+    }],
+    "nodes": [{
+      "id": 1,
+      "gmtModified": "Thu Mar 30 13:46:57 CST 2017",
+      "nodeDesc": "",
+      "infos": [{
+        "gmtModified": "Mon Sep 21 20:17:46 CST 2015",
+        "id": 1,
+        "infoContent": "123",
+        "gmtCreate": "Mon Sep 21 20:17:46 CST 2015",
+        "infoType": "123",
+        "infoName": "123"
+      }],
+      "gmtCreate": "Thu Mar 30 13:46:57 CST 2017",
+      "priority": "10",
+      "nodeName": "初步定位",
+      "planId": 2,
+      "nodeType": "PRE_RECO"
+    }, {
+      "id": 2,
+      "gmtModified": "Thu Mar 30 13:46:57 CST 2017",
+      "nodeDesc": "",
+      "infos": [],
+      "gmtCreate": "Thu Mar 30 13:46:57 CST 2017",
+      "priority": "20",
+      "nodeName": "异常熔断",
+      "planId": 2,
+      "nodeType": "FUSING"
+    }, {
+      "id": 3,
+      "gmtModified": "Thu Mar 30 13:46:57 CST 2017",
+      "nodeDesc": "",
+      "infos": [],
+      "gmtCreate": "Thu Mar 30 13:46:57 CST 2017",
+      "priority": "30",
+      "nodeName": "异常处理",
+      "planId": 2,
+      "nodeType": "HANDLE"
+    }, {
+      "id": 4,
+      "gmtModified": "Thu Mar 30 13:46:57 CST 2017",
+      "nodeDesc": "",
+      "infos": [],
+      "gmtCreate": "Thu Mar 30 13:46:57 CST 2017",
+      "priority": "40",
+      "nodeName": "善后处理",
+      "planId": 2,
+      "nodeType": "AFTERMATH"
+    }],
+    "description": "qqq",
+    "name": "222"
+  },
+  "success": true
+}
