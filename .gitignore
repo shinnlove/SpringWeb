@@ -10,5 +10,7 @@ bin
 *.log
 .txt
 .idea/
-*.iml
+dist/
 node_modules/
+*.iml
+package-lock.json
