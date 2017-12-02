@@ -13,6 +13,8 @@ let MyPage = React.createClass({
             columnData: [],
             columnDataAfterFilter: [],
             planInfo: {},
+            currentPageNo:1,
+            currentPageSize:10,
             loading: false,
             visible: false
         };
@@ -41,10 +43,13 @@ let MyPage = React.createClass({
             }
             query = queryCondition;
         }
+        // 再打上页数
+        query.pageNo = this.state.currentPageNo;
+        query.pageSize = this.state.currentPageSize;
+
         var params = {
-            planStr: JSON.stringify(query)
+            paramKey: JSON.stringify(query)
         };
-        console.log(query);
 
         let url = "crawler/webData.json",
             opts = {
@@ -95,7 +100,11 @@ let MyPage = React.createClass({
     },
 
     onPagiChange:function (page,pageSize) {
-        console.log(page,pageSize);
+        // 分页器改变页数改变控件内全局变量
+        this.setState({
+            currentPageNo:page,
+            currentPageSize:pageSize
+        });
     },
 
     cancelModal: function () {
