@@ -31,6 +31,7 @@ let MyPage = React.createClass({
 
     loadData: function (loadAll) {
         let _self = this, query;
+        let spidername = this.props.type;
         if (!loadAll) {
             let queryCondition = this.props.form.getFieldsValue();
             queryCondition.title = queryCondition.title || "";
@@ -47,6 +48,9 @@ let MyPage = React.createClass({
         query.pageNo = this.state.currentPageNo;
         query.pageSize = this.state.currentPageSize;
 
+        //  加上查询类型
+        query.spidername = spidername;
+
         var params = {
             paramKey: JSON.stringify(query)
         };
@@ -60,14 +64,11 @@ let MyPage = React.createClass({
                     // console.log("success:" + JSON.stringify(resp) + ".");
 
                     // 此处兼容服务端请求
-                    if (resp.success) {
-                        // 查询业务成功
-                        const plans = JSON.parse(tools.convertSpecialChar(resp.result));
-
-                        console.log(plans);
+                    if (resp.errCode == 0) {
+                        // 查询业务成功 data是英语复数
 
                         // 查询成功
-                        _self.setState({columnData: plans, columnDataAfterFilter:plans, loading: false});
+                        _self.setState({columnData: resp.data, columnDataAfterFilter:resp.data, loading: false});
                     } else {
                         // 查询业务失败
                         _self.setState({planInfo: {}, loading: false});
@@ -77,7 +78,7 @@ let MyPage = React.createClass({
                 "error": function (XHR, status, error) {
                     // 查询失败
                     _self.setState({loading: false});
-                    message.error("预案数据查询失败。");
+                    message.error("预案webData查询失败。");
                 }
             }; // 请求选项
         tools.ajax(url, params, opts);
@@ -88,9 +89,6 @@ let MyPage = React.createClass({
     },
 
     viewPlan: function (record) {
-        window.onhashchange = function () {
-            console.log("hash test!!!");
-        };
         window.location.hash = "#/monitorConfig/emergencyPlan/PlanGlobalView/" + record.id; // 打开预览
     },
 
@@ -114,26 +112,6 @@ let MyPage = React.createClass({
     cancelModalAndRefresh() {
         this.setState({visible: false});
         this.loadData();
-    },
-
-    deletePlan: function (record) {
-        var _self = this;
-        tools.post('/monitor/plans/delete.json', {planId: record.id}).then(
-            function (datas) {
-                message.success("预案信息删除成功。");
-                _self.loadData();
-            }
-        );
-    },
-
-    praisePlan: function (record) {
-        var _self = this;
-        tools.post('/monitor/plans/praisePlan.json', {planId: record.id}).then(
-            function (datas) {
-                message.success("预案信息点赞成功。");
-                _self.loadData();
-            }
-        );
     },
 
     render: function () {

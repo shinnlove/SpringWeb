@@ -309,7 +309,6 @@ const tools = {
       str = str.replace(/&ldquo;/g, "\“");
       str = str.replace(/&rdquo;/g, "\”");
       str = str.replace(/&iquest;/g, "ß");
-
     }
     return str;
   },
