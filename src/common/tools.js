@@ -15,15 +15,11 @@ const tools = {
   isDev() {
     return /localhost/gi.test(location.host) || /10\.(\d+)\.(\d+)\.(\d+)/gi.test(location.host) || /127\.0\.0\.1\./gi.test(location.host)
   },
-  mock(url, devUrl) {
+  mock(url) {
     if (this.isDev()) {
-      if (devUrl) {
-        return 'mock/springweb/' + devUrl;
-      } else {
-        return url
-      }
+        return 'mock/springweb/' + url;
     } else {
-      return url
+        return url;
     }
   },
   get(url, query, desc, defaultErrorMessage) {
