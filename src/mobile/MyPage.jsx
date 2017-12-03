@@ -13,6 +13,7 @@ let MyPage = React.createClass({
             columnData: [],
             columnDataAfterFilter: [],
             planInfo: {},
+            totalCount: 0,
             currentPageNo:1,
             currentPageSize:10,
             loading: false,
@@ -68,10 +69,10 @@ let MyPage = React.createClass({
                         // 查询业务成功 data是英语复数
 
                         // 查询成功
-                        _self.setState({columnData: resp.data, columnDataAfterFilter:resp.data, loading: false});
+                        _self.setState({columnData: resp.data, columnDataAfterFilter:resp.data, loading: false, totalCount:resp.data.length});
                     } else {
                         // 查询业务失败
-                        _self.setState({planInfo: {}, loading: false});
+                        _self.setState({columnData: [], columnDataAfterFilter:[], loading: false, totalCount:[]});
                     }
 
                 },
@@ -160,14 +161,14 @@ let MyPage = React.createClass({
             }
         }];
 
-        let titlename = this.props.name;
+        let titleName = this.props.name;
         let titleholder = "请输入" + this.props.name;
 
         // let total = this.state.total;
         let pagination = {
             simple:true,
             onChange: this.onPagiChange,
-            total: 100, //总共
+            total: this.state.totalCount, //总共
             defaultCurrent: 1 //第一页
         }
 
@@ -178,7 +179,7 @@ let MyPage = React.createClass({
 
                     <Row>
                         <Col span={6}>
-                            <FormItem {...formItemLayout2} label={titlename}>
+                            <FormItem {...formItemLayout2} label={titleName}>
                                 {getFieldDecorator('title')(<Input placeholder={titleholder} style={{width: '100%'}}/>)}
                             </FormItem>
                         </Col>
