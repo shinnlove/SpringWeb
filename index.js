@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import FirstTry from './src/mobile/FirstTry';
+import MyDetailPage from './src/mobile/MyDetailPage';
 
 function App() {
     return (
@@ -15,6 +16,8 @@ function App() {
             <hr/>
             <br/>
             <FirstTry/>
+            {/*<MyDetailPage/>*/}
+
         </div>
     );
 }

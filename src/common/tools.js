@@ -16,11 +16,12 @@ const tools = {
     return /localhost/gi.test(location.host) || /10\.(\d+)\.(\d+)\.(\d+)/gi.test(location.host) || /127\.0\.0\.1\./gi.test(location.host)
   },
   mock(url) {
-    if (this.isDev()) {
-        return 'mock/springweb/' + url;
-    } else {
-        return url;
-    }
+      return url;
+    // if (this.isDev()) {
+    //     return 'mock/springweb/' + url;
+    // } else {
+    //     return url;
+    // }
   },
   get(url, query, desc, defaultErrorMessage) {
     var _self = this;
