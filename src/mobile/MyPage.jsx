@@ -72,13 +72,13 @@ let MyPage = React.createClass({
                         _self.setState({columnData: resp.data, columnDataAfterFilter:resp.data, loading: false, totalCount:resp.data.length});
                     } else {
                         // 查询业务失败
-                        _self.setState({columnData: [], columnDataAfterFilter:[], loading: false, totalCount:[]});
+                        _self.setState({columnData: [], columnDataAfterFilter:[], loading: false, totalCount:0});
                     }
 
                 },
                 "error": function (XHR, status, error) {
                     // 查询失败
-                    _self.setState({loading: false});
+                    _self.setState({columnData: [], columnDataAfterFilter:[], loading: false, totalCount:0});
                     message.error("预案webData查询失败。");
                 }
             }; // 请求选项
