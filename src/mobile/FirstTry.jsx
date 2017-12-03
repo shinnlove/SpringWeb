@@ -50,13 +50,13 @@ let FirstTry = React.createClass({
 
                 <Tabs defaultActiveKey="1" onChange={this.tabChange}>
                     <TabPane tab="最新通知" key="1">
-                        <MyPage name="标题"/>
+                        <MyPage name="标题" type="cmccyz_n"/>
                     </TabPane>
                     <TabPane tab="最新调查" key="2">
-                        <MyPage name="调查主题"/>
+                        <MyPage name="调查主题" type="cmccyz"/>
                     </TabPane>
-
                 </Tabs>
+
             </div>
         );
     }
