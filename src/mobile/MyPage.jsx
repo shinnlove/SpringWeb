@@ -68,6 +68,13 @@ let MyPage = React.createClass({
                     if (resp.errCode == 0) {
                         // 查询业务成功 data是英语复数
 
+                        // 转换日期
+                        for (var i = 0; i < resp.data.length; i++) {
+                            var oneDate = new Date();
+                            oneDate.setTime(resp.data[i].pubtime);
+                            resp.data[i].pubtime = oneDate.toLocaleString();
+                        }
+
                         // 查询成功
                         _self.setState({columnData: resp.data, columnDataAfterFilter:resp.data, loading: false, totalCount:resp.data.length});
                     } else {
