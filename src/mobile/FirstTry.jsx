@@ -48,6 +48,11 @@ let FirstTry = React.createClass({
                     {/*<p>其实也是蛮简单的</p>*/}
                 {/*</Modal>*/}
 
+                <div style={{position:"relative"}}>
+                    <img src="../../images/logo.png" style={{display:"inline-block"}}/>
+                    <h1 style={{display:"inline-block", marginLeft:"20px", position:"absolute", top:"10px"}}>中国移动交流网站</h1>
+                </div>
+
                 <Tabs defaultActiveKey="1" onChange={this.tabChange}>
                     <TabPane tab="最新通知" key="1">
                         <MyPage name="标题" type="cmccyz_n"/>
