@@ -111,6 +111,18 @@ let MyPage = React.createClass({
             currentPageNo:page,
             currentPageSize:pageSize
         });
+        // 重新请求数据
+        this.loadData();
+    },
+
+    onPagiShowSizeChange: function (current, size) {
+        // 当前页和每页大小
+        this.setState({
+            currentPageNo:current,
+            currentPageSize:size
+        });
+        // 重新请求数据
+        this.loadData();
     },
 
     cancelModal: function () {
@@ -174,9 +186,16 @@ let MyPage = React.createClass({
         // let total = this.state.total;
         let pagination = {
             simple:true,
-            onChange: this.onPagiChange,
             total: this.state.totalCount, //总共
-            defaultCurrent: 1 //第一页
+            defaultCurrent: 1, // 默认第一页
+            defaultPageSize: 10, // 默认每页10条
+            current: this.state.currentPageNo,
+            pageSize: this.state.currentPageSize,
+            pageSizeOptions: ['10', '20', '30', '40', '50'], // 指定每页可以显示多少条
+            showQuickJumper: true, // 可以快速跳转某一页
+            showSizeChanger: true, // 可以改变页数
+            onChange: this.onPagiChange,
+            onShowSizeChange: this.onPagiShowSizeChange, // 改变页码事件
         }
 
         return (
