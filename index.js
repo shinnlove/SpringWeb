@@ -1,22 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Router, Route, Redirect, useRouterHistory} from 'react-router';
+import {createHashHistory} from 'history';
+
+const appHistory = useRouterHistory(createHashHistory)({queryKey: false});
 import './index.css';
 import FirstTry from './src/mobile/FirstTry';
 import MyDetailPage from './src/mobile/MyDetailPage';
+import HelloOne from './src/mobile/HelloOne';
+import HelloTwo from './src/mobile/HelloTwo';
 
 function App() {
     return (
         <div style={{margin: 20}}>
 
-            <div style={{position:"relative"}}>
-                {/*<img src="./images/logo.png" style={{display:"inline-block"}}/>*/}
-                {/*<h1 style={{display:"inline-block", marginLeft:"20px", position:"absolute", top:"10px"}}>中国移动交流网站</h1>*/}
-            </div>
+            <Router history={appHistory}>
 
-            <hr/>
-            <br/>
-            <FirstTry/>
-            {/*<MyDetailPage/>*/}
+                <Redirect from="/dataview" to="/dataview/AnalysisPlateform/Survey"/>
+                <Redirect from="/platform/Grail" to="/Grail"/>
+
+                <Route path="/">
+                    <Route path="webdata">
+                        <Route path="list" name="list" component={FirstTry}/>
+                        <Route path="detail/:id" name="detail" component={MyDetailPage}/>
+                    </Route>
+                    <Route path="reportNew">
+                        <Route path="helloOnePage" name="helloOnePage" component={HelloOne}/>
+                        <Route path="helloTwoPage" name="helloTwoPage" component={HelloTwo}/>
+                    </Route>
+                </Route>
+
+                <Redirect from="*" to="/"/>
+
+            </Router>
 
         </div>
     );
