@@ -76,16 +76,31 @@ let MyPage = React.createClass({
                         }
 
                         // 查询成功
-                        _self.setState({columnData: resp.data, columnDataAfterFilter:resp.data, loading: false, totalCount:resp.total});
+                        _self.setState({
+                            columnData: resp.data,
+                            columnDataAfterFilter:resp.data,
+                            totalCount:resp.total,
+                            loading: false
+                        });
                     } else {
                         // 查询业务失败
-                        _self.setState({columnData: [], columnDataAfterFilter:[], loading: false, totalCount:0});
+                        _self.setState({
+                            columnData: [],
+                            columnDataAfterFilter:[],
+                            totalCount:0,
+                            loading: false
+                        });
                     }
 
                 },
                 "error": function (XHR, status, error) {
                     // 查询失败
-                    _self.setState({columnData: [], columnDataAfterFilter:[], loading: false, totalCount:0});
+                    _self.setState({
+                        columnData: [],
+                        columnDataAfterFilter:[],
+                        totalCount:0,
+                        loading: false
+                    });
                     message.error("预案webData查询失败。");
                 }
             }; // 请求选项
@@ -106,23 +121,29 @@ let MyPage = React.createClass({
     },
 
     onPagiChange:function (page,pageSize) {
+        let _self = this;
         // 分页器改变页数改变控件内全局变量
-        this.setState({
+        _self.setState({
             currentPageNo:page,
             currentPageSize:pageSize
         });
         // 重新请求数据
-        this.loadData();
+        setTimeout(function () {
+            _self.loadData();
+        }, 100);
     },
 
     onPagiShowSizeChange: function (current, size) {
+        let _self = this;
         // 当前页和每页大小
-        this.setState({
+        _self.setState({
             currentPageNo:current,
             currentPageSize:size
         });
         // 重新请求数据
-        this.loadData();
+        setTimeout(function () {
+            _self.loadData();
+        }, 100);
     },
 
     cancelModal: function () {
@@ -185,7 +206,7 @@ let MyPage = React.createClass({
 
         // let total = this.state.total;
         let pagination = {
-            simple:true,
+            simple:false,
             total: this.state.totalCount, //总共
             defaultCurrent: 1, // 默认第一页
             defaultPageSize: 10, // 默认每页10条
