@@ -49,8 +49,6 @@ let MyPage = React.createClass({
         query.pageNo = this.state.currentPageNo;
         query.pageSize = this.state.currentPageSize;
 
-        console.log(query);
-
         //  加上查询类型
         query.spidername = spidername;
 
