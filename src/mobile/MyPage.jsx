@@ -76,7 +76,7 @@ let MyPage = React.createClass({
                         }
 
                         // 查询成功
-                        _self.setState({columnData: resp.data, columnDataAfterFilter:resp.data, loading: false, totalCount:resp.data.length});
+                        _self.setState({columnData: resp.data, columnDataAfterFilter:resp.data, loading: false, totalCount:resp.total});
                     } else {
                         // 查询业务失败
                         _self.setState({columnData: [], columnDataAfterFilter:[], loading: false, totalCount:0});
