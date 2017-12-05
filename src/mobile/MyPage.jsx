@@ -112,7 +112,7 @@ let MyPage = React.createClass({
     },
 
     viewPlan: function (record) {
-        window.location.hash = "#/monitorConfig/emergencyPlan/PlanGlobalView/" + record.id; // 打开预览
+        window.location.hash = "#/webdata/detail/" + record.id; // 打开预览
     },
 
     editPlan: function (record) {

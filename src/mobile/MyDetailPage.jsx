@@ -61,6 +61,10 @@ let MyDetailPage = React.createClass({
 
     },
 
+    closePage: function () {
+        window.history.go(-1);
+    },
+
     render: function () {
 
         // 数据库里查询info
@@ -93,7 +97,7 @@ let MyDetailPage = React.createClass({
                     </div>
                 </content>
                 <footer className="footer">
-                    <input type="button" name="close-btn" className="close-btn" value="关闭"/>
+                    <input type="button" name="close-btn" className="close-btn" value="关闭" onClick={this.closePage.bind(this)}/>
                 </footer>
             </div>
         );
