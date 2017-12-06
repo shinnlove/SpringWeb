@@ -58,7 +58,7 @@ let MyPage = React.createClass({
 
         let url = "crawler/webDataList.json",
             opts = {
-                loadingMsg: "查询预案数据中...",
+                loadingMsg: "查询数据中...",
                 noMsg: true, // 不要成功或错误的解析信息
                 type: "GET",
                 "success": function (resp) {
