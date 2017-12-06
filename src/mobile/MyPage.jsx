@@ -130,7 +130,7 @@ let MyPage = React.createClass({
         // 重新请求数据
         setTimeout(function () {
             _self.loadData();
-        }, 100);
+        }, 60);
     },
 
     onPagiShowSizeChange: function (current, size) {
@@ -143,7 +143,7 @@ let MyPage = React.createClass({
         // 重新请求数据
         setTimeout(function () {
             _self.loadData();
-        }, 100);
+        }, 60);
     },
 
     cancelModal: function () {
