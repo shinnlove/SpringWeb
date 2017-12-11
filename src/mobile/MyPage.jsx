@@ -74,7 +74,13 @@ let MyPage = React.createClass({
 
     loadData: function (loadAll) {
         let _self = this, query = {};
-        if (!loadAll) {
+        if (loadAll) {
+            query.title = "";
+            query.publisher = "";
+            query.content = "";
+            query.startTime = "";
+            query.endTime = "";
+        } else {
             query.title = this.state.title;
             query.publisher = this.state.publisher;
             query.content = this.state.content;
