@@ -38,7 +38,7 @@ let MyPage = React.createClass({
     queryData: function () {
         let _self = this;
         let currentCondition = this.props.form.getFieldsValue(); // 当前表单状态
-        if (typeof currentCondition.time != "undefined" && typeof currentCondition.time.length != "undefined") {
+        if (typeof currentCondition.time != "undefined" && typeof currentCondition.time.length != "undefined" && typeof currentCondition.time != "") {
             currentCondition.startTime = currentCondition.time[0].format('YYYY-MM-DD ') + '00:00:00';
             currentCondition.endTime = currentCondition.time[1].format('YYYY-MM-DD ') + '23:59:59';
             // 带时间改变
