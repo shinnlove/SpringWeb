@@ -63,7 +63,8 @@ let MyDetailPage = React.createClass({
     },
 
     closePage: function () {
-        window.history.go(-1);
+        window.close();
+        // window.history.go(-1); // 回退一格
     },
 
     formatDate: function (timestamp) {
