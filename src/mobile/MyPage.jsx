@@ -70,9 +70,17 @@ let MyPage = React.createClass({
 
                         // 转换日期
                         for (var i = 0; i < resp.data.length; i++) {
-                            var oneDate = new Date();
-                            oneDate.setTime(resp.data[i].pubtime);
-                            resp.data[i].pubtime = oneDate.toLocaleString();
+                            // var oneDate = new Date();
+                            // oneDate.setTime(resp.data[i].pubtime);
+                            // resp.data[i].pubtime = oneDate.toLocaleString();
+                            console.log("this is old time" + resp.data[i].pubtime);
+                            var pubtime = new Date(resp.data[i].pubtime),
+                                y = pubtime.getFullYear(),
+                                m = pubtime.getMonth() + 1,
+                                d = pubtime.getDate();
+                            resp.data[i].pubtime = y + "-" + (m < 10 ? "0" + m :m) +"-" + (d<10?"0"+d:d)+"  "
+                                + pubtime.toTimeString().substr(0,8);
+                            console.log("this is new time" + resp.data[i].pubtime);
                         }
 
                         // 查询成功
@@ -107,17 +115,8 @@ let MyPage = React.createClass({
         tools.ajax(url, params, opts);
     },
 
-    editPlanNode: function (record) {
-        window.location.hash = "#/monitorConfig/emergencyPlan/PlanGlobalViewEdit/" + record.id; // 跳转编辑
-    },
-
     viewPlan: function (record) {
         window.location.hash = "#/webdata/detail/" + record.id; // 打开预览
-    },
-
-    editPlan: function (record) {
-        // console.log("edit:" + record);
-        this.setState({visible: true, planInfo: record});
     },
 
     onPagiChange:function (page,pageSize) {
@@ -172,24 +171,25 @@ let MyPage = React.createClass({
         const columns = [ {
             title: '编号',
             dataIndex: 'id',
+            width: '10%',
         },{
             title: this.props.name,
             dataIndex: 'title',
+            width: '40%',
         },{
             title: '发布人',
             dataIndex: 'author',
-        },{
-            title: '发布机构',
-            dataIndex: 'medianame',
+            width: '20%',
         },{
             title: '发布时间',
             dataIndex: 'pubtime',
+            width: '20%',
         },
         {
             title: '操作',
             dataIndex: 'operator',
             key: 'operator',
-            width: 200,
+            width: '10%',
             render: (text, record) => {
                 return (
                     <div>
@@ -225,25 +225,25 @@ let MyPage = React.createClass({
                 <Form horizontal className="ant-advanced-search-form">
 
                     <Row>
-                        <Col span={6}>
+                        <Col span={6} >
                             <FormItem {...formItemLayout2} label={titleName}>
                                 {getFieldDecorator('title')(<Input placeholder={titleholder} style={{width: '100%'}}/>)}
                             </FormItem>
                         </Col>
-                        <Col span={6} offset={1}>
-                            <FormItem {...formItemLayout} label="发布人：">
+                        <Col span={6} offset={2}>
+                            <FormItem {...formItemLayout2} label="发布人：">
                                 {getFieldDecorator('publisher')(<Input placeholder="请输入发布人" style={{width: '100%'}}/>)}
                             </FormItem>
                         </Col>
-                        <Col span={6} offset={1}>
-                            <FormItem {...formItemLayout} label="发布机构：">
-                                {getFieldDecorator('publishInst')(<Input placeholder="请输入发布机构" style={{width: '100%'}}/>)}
-                            </FormItem>
-                        </Col>
+                        {/*<Col span={6} offset={1}>*/}
+                            {/*<FormItem {...formItemLayout} label="发布机构：">*/}
+                                {/*{getFieldDecorator('publishInst')(<Input placeholder="请输入发布机构" style={{width: '100%'}}/>)}*/}
+                            {/*</FormItem>*/}
+                        {/*</Col>*/}
                     </Row>
 
                     <Row>
-                        <Col span={6}>
+                        <Col span={6} >
                             <FormItem {...formItemLayout2} label="正文：">
                                 {getFieldDecorator('content')(<Input placeholder="请输入关键字" style={{width: '100%'}}/>)}
                             </FormItem>

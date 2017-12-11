@@ -95,13 +95,13 @@ let MyDetailPage = React.createClass({
                 <div className="wrapper round">
                     <header className="header clearfix">
                         <h1>{info.title}</h1>
-                        <hr/>
-                        <div className="header-append">
-                            <span>发布人：<em>{info.author}</em></span>
-                            <span>发布时间：<em>{pubtime}</em></span>
-                            <span>发布机构：<em>{info.spidername}</em></span>
-                            <span>地域：<em>{info.area}</em></span>
-                        </div>
+                        {/*<hr/>*/}
+                        {/*<div className="header-append">*/}
+                            {/*<span>发布人：<em>{info.author}</em></span>*/}
+                            {/*<span>发布时间：<em>{pubtime}</em></span>*/}
+                            {/*<span>发布机构：<em>{info.spidername}</em></span>*/}
+                            {/*<span>地域：<em>{info.area}</em></span>*/}
+                        {/*</div>*/}
                     </header>
                     <content className="clearfix">
                         <div className="crawler-detail round" dangerouslySetInnerHTML={dangerousHtml}>
@@ -109,9 +109,8 @@ let MyDetailPage = React.createClass({
                             {/*<!-- 插入内容end -->*/}
                         </div>
                         <div className="content-append clearfix">
+                            <span>地域：<em>{info.area}</em></span>
                             <span>发布来源：<em>{info.source}</em></span>
-                            <span>回复数：<em>N/A</em></span>
-                            <span>阅读数：<em>N/A</em></span>
                         </div>
                     </content>
                     <footer className="footer">
