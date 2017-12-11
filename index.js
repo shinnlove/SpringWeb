@@ -18,6 +18,7 @@ function App() {
 
                 <Redirect from="/dataview" to="/dataview/AnalysisPlateform/Survey"/>
                 <Redirect from="/platform/Grail" to="/Grail"/>
+                <Redirect from="/" to="/webdata/list"/>
 
                 <Route path="/">
                     <Route path="webdata">
