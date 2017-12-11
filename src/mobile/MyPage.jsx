@@ -16,46 +16,83 @@ let MyPage = React.createClass({
             totalCount: 0,
             currentPageNo:1,
             currentPageSize:10,
-            loading: false,
-            visible: false
+            loading: true,
+            visible: false,
+            // 全局变量，防止变态乱来，点了按钮才改变查询条件，否则随便你怎么搞都不变化
+            title: "",
+            publisher: "",
+            content: "",
+            startTime: "",
+            endTime: ""
         };
 
     },
 
     componentDidMount: function () {
-        this.loadData();
+        this.loadData(true);
     },
 
+    /**
+     * 点了按钮后改变状态、再查询数据。
+     **/
     queryData: function () {
-        this.loadData(false);
+        let _self = this;
+        let currentCondition = this.props.form.getFieldsValue(); // 当前表单状态
+        if (typeof currentCondition.time != "undefined" && typeof currentCondition.time.length != "undefined") {
+            currentCondition.startTime = currentCondition.time[0].format('YYYY-MM-DD ') + '00:00:00';
+            currentCondition.endTime = currentCondition.time[1].format('YYYY-MM-DD ') + '23:59:59';
+            // 带时间改变
+            _self.setState({
+                title: currentCondition.title,
+                publisher: currentCondition.publisher,
+                content: currentCondition.content,
+                startTime: currentCondition.startTime,
+                endTime: currentCondition.endTime,
+                currentPageNo: 1, // 只要点查询按钮就第一页
+                loading:true
+            });
+        } else {
+            // 不带时间改变
+            _self.setState({
+                title: currentCondition.title,
+                publisher: currentCondition.publisher,
+                content: currentCondition.content,
+                currentPageNo: 1, // 只要点查询按钮就第一页
+                loading:true
+            });
+        }
+
+        // loading=true的时候，开始查询，延时200毫秒保证state变化
+        setTimeout(function () {
+            _self.loadData(false);
+        }, 200);
+    },
+
+    handleSelect: function(record, selected, selectedRows) {
+        // this.viewPlan(record);
     },
 
     loadData: function (loadAll) {
-        let _self = this, query;
-        let spidername = this.props.type;
+        let _self = this, query = {};
         if (!loadAll) {
-            let queryCondition = this.props.form.getFieldsValue();
-            queryCondition.title = queryCondition.title || "";
-            queryCondition.publisher = queryCondition.publisher || "";
-            queryCondition.publishInst = queryCondition.publishInst || "";
-            queryCondition.content = queryCondition.content || "";
-            if (typeof queryCondition.time != "undefined" && typeof queryCondition.time.length != "undefined") {
-                queryCondition.startTime = queryCondition.time[0].format('YYYY-MM-DD ') + '00:00:00';
-                queryCondition.endTime = queryCondition.time[1].format('YYYY-MM-DD ') + '23:59:59';
-            }
-            query = queryCondition;
+            query.title = this.state.title;
+            query.publisher = this.state.publisher;
+            query.content = this.state.content;
+            query.startTime = this.state.startTime;
+            query.endTime = this.state.endTime;
         }
+
         // 再打上页数
         query.pageNo = this.state.currentPageNo;
         query.pageSize = this.state.currentPageSize;
-
         //  加上查询类型
-        query.spidername = spidername;
+        query.spidername = this.props.type;
+
+        console.log("请看查询条件："+JSON.stringify(query));
 
         var params = {
             paramKey: JSON.stringify(query)
         };
-
         let url = "crawler/webDataList.json",
             opts = {
                 loadingMsg: "查询数据中...",
@@ -70,9 +107,17 @@ let MyPage = React.createClass({
 
                         // 转换日期
                         for (var i = 0; i < resp.data.length; i++) {
-                            var oneDate = new Date();
-                            oneDate.setTime(resp.data[i].pubtime);
-                            resp.data[i].pubtime = oneDate.toLocaleString();
+                            // var oneDate = new Date();
+                            // oneDate.setTime(resp.data[i].pubtime);
+                            // resp.data[i].pubtime = oneDate.toLocaleString();
+                            // console.log("this is old time" + resp.data[i].pubtime);
+                            var pubtime = new Date(resp.data[i].pubtime),
+                                y = pubtime.getFullYear(),
+                                m = pubtime.getMonth() + 1,
+                                d = pubtime.getDate();
+                            resp.data[i].pubtime = y + "-" + (m < 10 ? "0" + m :m) +"-" + (d<10?"0"+d:d)+"  "
+                                + pubtime.toTimeString().substr(0,8);
+                            // console.log("this is new time" + resp.data[i].pubtime);
                         }
 
                         // 查询成功
@@ -107,17 +152,9 @@ let MyPage = React.createClass({
         tools.ajax(url, params, opts);
     },
 
-    editPlanNode: function (record) {
-        window.location.hash = "#/monitorConfig/emergencyPlan/PlanGlobalViewEdit/" + record.id; // 跳转编辑
-    },
-
     viewPlan: function (record) {
-        window.location.hash = "#/webdata/detail/" + record.id; // 打开预览
-    },
-
-    editPlan: function (record) {
-        // console.log("edit:" + record);
-        this.setState({visible: true, planInfo: record});
+        window.open("#/webdata/detail/" + record.id); // 打开标签卡
+        // window.location.hash = "#/webdata/detail/" + record.id; // 打开预览
     },
 
     onPagiChange:function (page,pageSize) {
@@ -172,34 +209,40 @@ let MyPage = React.createClass({
         const columns = [ {
             title: '编号',
             dataIndex: 'id',
+            width: '10%',
         },{
             title: this.props.name,
             dataIndex: 'title',
+            width: '40%',
         },{
             title: '发布人',
             dataIndex: 'author',
-        },{
-            title: '发布机构',
-            dataIndex: 'medianame',
+            width: '20%',
         },{
             title: '发布时间',
             dataIndex: 'pubtime',
+            width: '20%',
         },
         {
             title: '操作',
             dataIndex: 'operator',
             key: 'operator',
-            width: 200,
+            width: '10%',
             render: (text, record) => {
                 return (
                     <div>
                         <Tooltip title="预览详情">
-                            <Icon type="eye-o" className="icon-2x mr10" onClick={this.viewPlan.bind(this, record)}/>
+                            <Icon type="mail" style={{ fontSize: 20}} className="icon-2x mr10" onClick={this.viewPlan.bind(this, record)}/>
                         </Tooltip>
                     </div>
                 )
             }
         }];
+
+        // 处理选择
+        const rowSelection = {
+            onSelect:this.handleSelect,
+        };
 
         let titleName = this.props.name;
         let titleholder = "请输入" + this.props.name;
@@ -225,25 +268,25 @@ let MyPage = React.createClass({
                 <Form horizontal className="ant-advanced-search-form">
 
                     <Row>
-                        <Col span={6}>
+                        <Col span={6} >
                             <FormItem {...formItemLayout2} label={titleName}>
                                 {getFieldDecorator('title')(<Input placeholder={titleholder} style={{width: '100%'}}/>)}
                             </FormItem>
                         </Col>
-                        <Col span={6} offset={1}>
-                            <FormItem {...formItemLayout} label="发布人：">
+                        <Col span={6} offset={2}>
+                            <FormItem {...formItemLayout2} label="发布人：">
                                 {getFieldDecorator('publisher')(<Input placeholder="请输入发布人" style={{width: '100%'}}/>)}
                             </FormItem>
                         </Col>
-                        <Col span={6} offset={1}>
-                            <FormItem {...formItemLayout} label="发布机构：">
-                                {getFieldDecorator('publishInst')(<Input placeholder="请输入发布机构" style={{width: '100%'}}/>)}
-                            </FormItem>
-                        </Col>
+                        {/*<Col span={6} offset={1}>*/}
+                            {/*<FormItem {...formItemLayout} label="发布机构：">*/}
+                                {/*{getFieldDecorator('publishInst')(<Input placeholder="请输入发布机构" style={{width: '100%'}}/>)}*/}
+                            {/*</FormItem>*/}
+                        {/*</Col>*/}
                     </Row>
 
                     <Row>
-                        <Col span={6}>
+                        <Col span={6} >
                             <FormItem {...formItemLayout2} label="正文：">
                                 {getFieldDecorator('content')(<Input placeholder="请输入关键字" style={{width: '100%'}}/>)}
                             </FormItem>
@@ -259,13 +302,13 @@ let MyPage = React.createClass({
                             </FormItem>
                         </Col>
                         <Col span={6} offset={4}>
-                            <Button type="primary" htmlType="button" className={'common-btn'} onClick={this.queryData}>查询</Button>
+                            <Button type="primary" htmlType="button" className={'common-btn'} loading={this.state.loading} onClick={this.queryData}>查询</Button>
                         </Col>
                     </Row>
                 </Form>
 
                 <Table rowKey={record => record.id} columns={columns}
-                       dataSource={this.state.columnDataAfterFilter} size="middle" loading={this.state.loading} pagination={pagination}/>
+                       dataSource={this.state.columnDataAfterFilter} size="middle" loading={this.state.loading} pagination={pagination} />
             </div>
         );
     }

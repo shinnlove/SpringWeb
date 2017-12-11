@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Modal, message, Tabs} from 'antd';
 import MyPage from './MyPage';
+import img from '../../images/logo.png'
 
 const TabPane = Tabs.TabPane;
 
@@ -34,9 +35,9 @@ let FirstTry = React.createClass({
         this.closeModal();
     },
 
-    tabChange: function (key) {
-        message.info("切换到第"+key+"页。");
-    },
+    // tabChange: function (key) {
+    //     message.info("切换到第"+key+"页。");
+    // },
 
     render: function () {
         return (
@@ -49,7 +50,7 @@ let FirstTry = React.createClass({
                 {/*</Modal>*/}
 
                 <div style={{position:"relative", minHeight:"85px"}}>
-                    <img src="../images/logo.png" style={{display:"inline-block"}}/>
+                    <img src={img} style={{display:"inline-block"}}/>
                     <h1 style={{display:"inline-block", marginLeft:"20px", position:"absolute", top:"10px"}}>中国移动交流网站</h1>
                 </div>
 
