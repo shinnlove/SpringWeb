@@ -35,7 +35,7 @@ http://127.0.0.1:8000/?#/dynamic/fieldSet # createClass
 
 下载压缩包。解压缩后更名文件夹为node。
 
-安装tnpm/cnpm的命令：
+安装tnpm/cnpm的命令（二者选其一）：
 ```shell
 sudo npm install -g tnpm --registry=https://registry.npm.taobao.org
 
@@ -64,10 +64,12 @@ alias cnpm='你放置nodejs的目录/node/bin/cnpm'
 ```
 
 而后生效配置
+
 .bash命令下：
 ```shell
 source ~/.profile
 ```
+
 .zsh命令下：
 ```shell
 source ~/.zshrc
