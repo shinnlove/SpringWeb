@@ -2,26 +2,26 @@
 
 项目简要说明：
 
-一、克隆到本地
+# 一、克隆到本地
 
 ```shell
 cd
 git clone https://github.com/shinnlove/SpringWeb.git
 ```
 
-二、安装依赖
+# 二、安装依赖
 
 ```shell
 tnpm install
 ```
 
-三、运行项目
+# 三、运行项目
 
 ```shell
 tnpm start
 ```
 
-四、访问页面
+# 四、访问页面
 
 提供了两种react写法，extends和createClass方法，仅供参考。
 
@@ -29,8 +29,10 @@ http://127.0.0.1:8000/?#/dynamic/view # extends
 
 http://127.0.0.1:8000/?#/dynamic/fieldSet # createClass
 
-五、安装node、tnpm/cnpm
-访问https://npm.taobao.org/mirrors/node/v9.0.0/，下载压缩包。解压缩后更名文件夹为node。
+# 五、安装node、tnpm/cnpm
+访问https://npm.taobao.org/mirrors/node/v9.0.0/
+
+下载压缩包。解压缩后更名文件夹为node。
 
 安装tnpm/cnpm的命令：
 ```shell
@@ -60,3 +62,12 @@ alias tnpm='你放置nodejs的目录/Applications/node/bin/tnpm'
 
 ```
 
+而后生效配置
+.bash命令下：
+```shell
+source ~/.profile
+```
+.zsh命令下：
+```shell
+source ~/.zshrc
+```
