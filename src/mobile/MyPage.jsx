@@ -222,8 +222,8 @@ let MyPage = React.createClass({
             wrapperCol: {span: 16},
         };
         const formItemLayout2 = {
-            labelCol: {span: 4},
-            wrapperCol: {span: 20},
+            labelCol: {span: 5},
+            wrapperCol: {span: 19},
         };
 
         const {getFieldDecorator} = this.props.form;
