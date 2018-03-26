@@ -85,7 +85,7 @@ let MyDetailPage = React.createClass({
 
             // 转换日期
             let collectTime = this.formatDate(info.collecttime);
-            let pubtime = this.formatDate(info.pubtime)
+            let pubtime = this.formatDate(info.pubtime);
 
             // console.log(info);
 

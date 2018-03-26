@@ -38,7 +38,8 @@ let MyPage = React.createClass({
     queryData: function () {
         let _self = this;
         let currentCondition = this.props.form.getFieldsValue(); // 当前表单状态
-        if (typeof currentCondition.time != "undefined" && typeof currentCondition.time.length != "undefined") {
+        // 强烈注意：RangePicker的time属性本身undefined和time.length的undefined必须判断，然后叉掉会导致空数组长度为0
+        if (typeof currentCondition.time != "undefined" && typeof currentCondition.time.length != "undefined" && currentCondition.time.length != 0) {
             currentCondition.startTime = currentCondition.time[0].format('YYYY-MM-DD ') + '00:00:00';
             currentCondition.endTime = currentCondition.time[1].format('YYYY-MM-DD ') + '23:59:59';
             // 带时间改变
@@ -52,14 +53,30 @@ let MyPage = React.createClass({
                 loading:true
             });
         } else {
-            // 不带时间改变
-            _self.setState({
-                title: currentCondition.title,
-                publisher: currentCondition.publisher,
-                content: currentCondition.content,
-                currentPageNo: 1, // 只要点查询按钮就第一页
-                loading:true
-            });
+            // 强烈注意：RangePicker的time属性本身undefined和time.length的undefined必须判断，然后叉掉会导致空数组长度为0
+            if (typeof currentCondition.time != "undefined" && typeof currentCondition.time.length != "undefined" && currentCondition.time.length == 0) {
+                // 有时间改变为空值
+                _self.setState({
+                    title: currentCondition.title,
+                    publisher: currentCondition.publisher,
+                    content: currentCondition.content,
+                    startTime: "",
+                    endTime: "",
+                    currentPageNo: 1, // 只要点查询按钮就第一页
+                    loading:true
+                });
+            } else {
+                // 无时间
+                // 不带时间改变
+                _self.setState({
+                    title: currentCondition.title,
+                    publisher: currentCondition.publisher,
+                    content: currentCondition.content,
+                    currentPageNo: 1, // 只要点查询按钮就第一页
+                    loading:true
+                });
+            }
+
         }
 
         // loading=true的时候，开始查询，延时200毫秒保证state变化
@@ -74,7 +91,13 @@ let MyPage = React.createClass({
 
     loadData: function (loadAll) {
         let _self = this, query = {};
-        if (!loadAll) {
+        if (loadAll) {
+            query.title = "";
+            query.publisher = "";
+            query.content = "";
+            query.startTime = "";
+            query.endTime = "";
+        } else {
             query.title = this.state.title;
             query.publisher = this.state.publisher;
             query.content = this.state.content;
@@ -199,8 +222,8 @@ let MyPage = React.createClass({
             wrapperCol: {span: 16},
         };
         const formItemLayout2 = {
-            labelCol: {span: 4},
-            wrapperCol: {span: 20},
+            labelCol: {span: 5},
+            wrapperCol: {span: 19},
         };
 
         const {getFieldDecorator} = this.props.form;
