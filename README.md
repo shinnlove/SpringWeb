@@ -55,10 +55,10 @@ export NODE_HOME=你放置nodejs的目录/node
 
 export PATH=$PATH:$NODE_HOME/bin
 
-
 #npm and tnpm
 alias npm='你放置nodejs的目录/node/bin/npm'
-alias tnpm='你放置nodejs的目录/Applications/node/bin/tnpm'
+alias tnpm='你放置nodejs的目录/node/bin/tnpm'
+alias cnpm='你放置nodejs的目录/node/bin/cnpm'
 
 ```
 
