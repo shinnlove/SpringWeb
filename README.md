@@ -5,7 +5,8 @@
 # 一、克隆到本地
 
 ```shell
-cd
+cd 你的项目目录
+
 git clone https://github.com/shinnlove/SpringWeb.git
 ```
 
